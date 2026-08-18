@@ -1,5 +1,5 @@
 /**
- * Gaming Rewards Platform — API type schemas
+ * Cash Vio — API type schemas
  */
 export interface HealthStatus {
   status: string;
