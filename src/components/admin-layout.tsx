@@ -6,6 +6,7 @@ import { removeToken } from "@/lib/auth";
 import { useQueryClient } from "@tanstack/react-query";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useEffect } from "react";
+import { BrandLogo } from "@/components/brand-logo";
 
 const adminNavItems = [
   { href: "/admin/dashboard", label: "Overview", icon: LayoutDashboard },
@@ -15,15 +16,6 @@ const adminNavItems = [
   { href: "/admin/admins", label: "Admins", icon: ShieldCheck },
   { href: "/admin/verifications", label: "Verif. Codes", icon: KeyRound },
 ];
-
-function CaptaincashLogo() {
-  return (
-    <div className="flex items-center gap-2">
-      <img src="/logo.jpg" alt="Captain Cash" className="w-8 h-8 rounded-md object-cover shadow-[0_2px_8px_rgba(220,38,38,0.35)]" />
-      <span className="text-lg font-black tracking-tight text-foreground">Captain <span className="text-primary">Cash</span></span>
-    </div>
-  );
-}
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
   const [location, setLocation] = useLocation();
@@ -55,7 +47,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
       {adminNavItems.map((item) => (
         <Link key={item.href} href={item.href} onClick={closeSheet}>
           <div className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all cursor-pointer text-sm font-medium ${
-            location === item.href ? "bg-primary text-white shadow-[0_2px_8px_rgba(220,38,38,0.25)]" : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+            location === item.href ? "brand-gradient text-white shadow-brand" : "text-muted-foreground hover:bg-secondary hover:text-foreground"
           }`}>
             <item.icon className="h-4 w-4 shrink-0" />{item.label}
           </div>
@@ -68,7 +60,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen flex w-full bg-background text-foreground">
       <aside className="hidden lg:flex flex-col w-60 border-r border-border bg-sidebar shrink-0">
         <div className="p-5 border-b border-border">
-          <Link href="/"><CaptaincashLogo /></Link>
+          <Link href="/"><BrandLogo size="sm" /></Link>
           <div className="mt-2 flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             <span className="text-[11px] text-primary font-bold uppercase tracking-widest">Admin Panel</span>
@@ -94,14 +86,14 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
       <main className="flex-1 flex flex-col min-w-0">
         <header className="lg:hidden flex items-center justify-between p-4 border-b border-border bg-sidebar sticky top-0 z-50">
           <div className="flex items-center gap-2">
-            <CaptaincashLogo />
+            <BrandLogo size="sm" />
             <span className="text-[10px] text-primary font-bold uppercase tracking-widest hidden sm:block">Admin</span>
           </div>
           <Sheet>
             <SheetTrigger asChild><Button variant="ghost" size="icon"><Menu className="h-5 w-5" /></Button></SheetTrigger>
             <SheetContent side="left" className="w-60 p-0 bg-sidebar border-border">
               <div className="p-5 border-b border-border">
-                <CaptaincashLogo />
+                <BrandLogo size="sm" />
                 <div className="mt-2 flex items-center gap-1.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary" />
                   <span className="text-[11px] text-primary font-bold uppercase tracking-widest">Admin Panel</span>
