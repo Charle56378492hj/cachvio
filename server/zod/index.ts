@@ -1,5 +1,5 @@
 /**
- * Gaming Rewards Platform — Zod validation schemas
+ * Cash Vio — Zod validation schemas
  */
 import * as zod from "zod";
 
