@@ -3,6 +3,8 @@ import { useListPlatforms, useGetMe } from "@workspace/api-client-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Zap, ExternalLink, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Reveal } from "@/components/motion-fx";
 
 function buildOfferUrl(template: string, userId: number): string {
   return template
@@ -37,10 +39,10 @@ export default function Platforms() {
   return (
     <Layout>
       <div className="space-y-4">
-        <div>
+        <Reveal>
           <h2 className="text-2xl font-black tracking-tight text-foreground">Offerwalls</h2>
           <p className="text-muted-foreground text-sm mt-1">Select a platform to start earning USDT.</p>
-        </div>
+        </Reveal>
 
         <div className="flex flex-col lg:flex-row gap-4" style={{ height: "calc(100vh - 190px)", minHeight: "520px" }}>
           {/* Platform List */}
@@ -58,19 +60,24 @@ export default function Platforms() {
                 <p className="text-muted-foreground text-xs mt-1">Check back soon!</p>
               </div>
             ) : (
-              platforms.map((platform: any) => {
+              platforms.map((platform: any, i: number) => {
                 const isSelected = selectedPlatform?.id === platform.id;
                 const hasUrl = !!platform.apiEndpoint;
                 const isFeatured = platform.placement === "homepage";
 
                 return (
-                  <button
+                  <motion.button
                     key={platform.id}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.35, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                    whileHover={hasUrl ? { scale: 1.02, x: 2 } : undefined}
+                    whileTap={hasUrl ? { scale: 0.98 } : undefined}
                     onClick={() => hasUrl && setSelectedPlatform(platform)}
                     disabled={!hasUrl}
-                    className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl border transition-all duration-200 group ${
+                    className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl border transition-colors duration-200 group ${
                       isSelected
-                        ? "bg-primary text-white border-primary shadow-[0_2px_12px_rgba(249,115,22,0.25)]"
+                        ? "brand-gradient text-white border-transparent shadow-brand"
                         : hasUrl
                         ? "bg-card border-border hover:border-primary/40 hover:bg-primary/5 cursor-pointer"
                         : "bg-card border-border opacity-50 cursor-not-allowed"
@@ -105,21 +112,26 @@ export default function Platforms() {
                           </span>
                         )}
                       </div>
-                      <p className={`text-xs truncate mt-0.5 ${isSelected ? "text-orange-100" : "text-muted-foreground"}`}>
+                      <p className={`text-xs truncate mt-0.5 ${isSelected ? "text-white/75" : "text-muted-foreground"}`}>
                         {hasUrl ? "Click to open" : "Coming soon"}
                       </p>
                     </div>
                     {hasUrl && (
                       <ChevronRight className={`h-4 w-4 shrink-0 ${isSelected ? "text-white" : "text-muted-foreground group-hover:text-primary"}`} />
                     )}
-                  </button>
+                  </motion.button>
                 );
               })
             )}
           </div>
 
           {/* Iframe Panel — always shows selected platform */}
-          <div className="flex-1 bg-card border border-border rounded-2xl overflow-hidden flex flex-col shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.985 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-1 bg-card border border-border rounded-2xl overflow-hidden flex flex-col shadow-sm"
+          >
             {selectedPlatform ? (
               <>
                 {/* Top bar */}
@@ -154,8 +166,8 @@ export default function Platforms() {
               </>
             ) : (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
-                <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-5">
-                  <Zap className="h-8 w-8 text-primary" />
+                <div className="w-16 h-16 rounded-2xl brand-gradient shadow-brand flex items-center justify-center mb-5 animate-float">
+                  <Zap className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-lg font-bold text-foreground mb-2">No platforms available</h3>
                 <p className="text-muted-foreground text-sm max-w-xs">
@@ -163,7 +175,7 @@ export default function Platforms() {
                 </p>
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
       </div>
     </Layout>
