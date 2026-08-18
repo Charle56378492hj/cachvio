@@ -12,8 +12,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, Send, Wallet } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
+import { motion } from "framer-motion";
+import { Reveal, Tilt } from "@/components/motion-fx";
 
 const formatMoney = (value?: string | number | null) => {
   const n = Number(value ?? 0);
@@ -78,101 +80,111 @@ export default function Withdraw() {
   return (
     <Layout>
       <div className="space-y-8 max-w-6xl mx-auto">
-        <div>
-          <h2 className="text-3xl font-black tracking-tight uppercase">Withdraw Funds</h2>
+        <Reveal>
+          <h2 className="text-3xl font-black tracking-tight text-foreground">Withdraw Funds</h2>
           <p className="text-muted-foreground">Transfer your balance to your preferred payment method.</p>
-        </div>
+        </Reveal>
 
         <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-1 space-y-6">
-            <Card className="bg-card border-border">
-              <CardHeader>
-                <CardTitle className="uppercase tracking-wider">Request Withdrawal</CardTitle>
-                <CardDescription>Minimum withdrawal: $1</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="mb-6 p-4 bg-accent rounded-lg border border-border flex justify-between items-center">
-                  <span className="text-muted-foreground uppercase text-xs font-bold">Available</span>
-                  <span className="font-bold">{formatMoney(balanceData?.balance)} USDT</span>
-                </div>
+          <Reveal delay={0.06} className="lg:col-span-1">
+            <Tilt strength={5}>
+              <Card className="relative overflow-hidden bg-card border-border shadow-sm">
+                <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full brand-gradient opacity-[0.08] blur-2xl animate-float-slow" aria-hidden />
+                <CardHeader className="relative">
+                  <CardTitle className="flex items-center gap-2 uppercase tracking-wider">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-lg brand-gradient shadow-brand">
+                      <Send className="h-3.5 w-3.5 text-white" />
+                    </span>
+                    Request Withdrawal
+                  </CardTitle>
+                  <CardDescription>Minimum withdrawal: $1</CardDescription>
+                </CardHeader>
+                <CardContent className="relative">
+                  <div className="mb-6 flex items-center justify-between rounded-xl border border-primary/15 bg-accent/70 p-4">
+                    <span className="flex items-center gap-1.5 text-xs font-bold uppercase text-muted-foreground">
+                      <Wallet className="h-3.5 w-3.5 text-primary" /> Available
+                    </span>
+                    <span className="font-black text-foreground">{formatMoney(balanceData?.balance)} USDT</span>
+                  </div>
 
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="amount"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-muted-foreground uppercase text-xs font-bold">Amount (USDT)</FormLabel>
-                          <FormControl>
-                            <Input type="number" step="0.01" placeholder="1.00" {...field} className="bg-background border-input focus-visible:ring-primary" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="network"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-muted-foreground uppercase text-xs font-bold">Payment Method</FormLabel>
-                          <Select
-                            onValueChange={(val) => {
-                              field.onChange(val);
-                              form.setValue("walletAddress", "");
-                            }}
-                            defaultValue={field.value}
-                          >
+                  <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                      <FormField
+                        control={form.control}
+                        name="amount"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-muted-foreground uppercase text-xs font-bold">Amount (USDT)</FormLabel>
                             <FormControl>
-                              <SelectTrigger className="bg-background border-input focus-visible:ring-primary">
-                                <SelectValue placeholder="Select method" />
-                              </SelectTrigger>
+                              <Input type="number" step="0.01" placeholder="1.00" {...field} className="h-11 rounded-xl bg-background border-input focus-visible:ring-primary" />
                             </FormControl>
-                            <SelectContent>
-                              {networkOptions.map(opt => (
-                                <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="walletAddress"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-muted-foreground uppercase text-xs font-bold">
-                            {networkMeta.addressLabel}
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder={networkMeta.addressPlaceholder}
-                              {...field}
-                              className="bg-background border-input focus-visible:ring-primary font-mono text-sm"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <Button
-                      type="submit"
-                      className="w-full bg-primary text-white font-bold uppercase tracking-wider hover:bg-primary/90 mt-4"
-                      disabled={withdrawMutation.isPending}
-                    >
-                      {withdrawMutation.isPending ? <Loader2 className="animate-spin h-5 w-5" /> : "Withdraw Now"}
-                    </Button>
-                  </form>
-                </Form>
-              </CardContent>
-            </Card>
-          </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="network"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-muted-foreground uppercase text-xs font-bold">Payment Method</FormLabel>
+                            <Select
+                              onValueChange={(val) => {
+                                field.onChange(val);
+                                form.setValue("walletAddress", "");
+                              }}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="h-11 rounded-xl bg-background border-input focus-visible:ring-primary">
+                                  <SelectValue placeholder="Select method" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {networkOptions.map(opt => (
+                                  <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="walletAddress"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-muted-foreground uppercase text-xs font-bold">
+                              {networkMeta.addressLabel}
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder={networkMeta.addressPlaceholder}
+                                {...field}
+                                className="h-11 rounded-xl bg-background border-input focus-visible:ring-primary font-mono text-sm"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button
+                        type="submit"
+                        className="w-full h-11 brand-gradient text-white font-black uppercase tracking-wider shadow-brand hover:-translate-y-0.5 transition-transform mt-4"
+                        disabled={withdrawMutation.isPending}
+                      >
+                        {withdrawMutation.isPending ? <Loader2 className="animate-spin h-5 w-5" /> : "Withdraw Now"}
+                      </Button>
+                    </form>
+                  </Form>
+                </CardContent>
+              </Card>
+            </Tilt>
+          </Reveal>
 
-          <div className="lg:col-span-2">
-            <Card className="bg-card border-border h-full">
+          <Reveal delay={0.12} className="lg:col-span-2">
+            <Card className="bg-card border-border h-full shadow-sm">
               <CardHeader>
                 <CardTitle className="uppercase tracking-wider">Withdrawal History</CardTitle>
               </CardHeader>
@@ -191,8 +203,14 @@ export default function Withdraw() {
                       {historyLoading ? (
                         <TableRow><TableCell colSpan={4} className="text-center py-8"><Loader2 className="animate-spin h-6 w-6 mx-auto text-primary"/></TableCell></TableRow>
                       ) : historyData?.withdrawals?.length ? (
-                        historyData.withdrawals.map((w) => (
-                          <TableRow key={w.id} className="border-border">
+                        historyData.withdrawals.map((w, i) => (
+                          <motion.tr
+                            key={w.id}
+                            initial={{ opacity: 0, x: -8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.35, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                            className="border-border border-b transition-colors hover:bg-primary/[0.03]"
+                          >
                             <TableCell className="text-muted-foreground whitespace-nowrap">
                               {new Date(w.createdAt).toLocaleDateString()}
                             </TableCell>
@@ -210,7 +228,7 @@ export default function Withdraw() {
                                 {w.status}
                               </Badge>
                             </TableCell>
-                          </TableRow>
+                          </motion.tr>
                         ))
                       ) : (
                         <TableRow>
@@ -224,7 +242,7 @@ export default function Withdraw() {
                 </div>
               </CardContent>
             </Card>
-          </div>
+          </Reveal>
         </div>
       </div>
     </Layout>
