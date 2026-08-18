@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import logoSrc from "@/assets/cash-vio-logo.png";
 
 interface BrandLogoProps {
   size?: "sm" | "md" | "lg";
@@ -7,23 +8,18 @@ interface BrandLogoProps {
 }
 
 const sizeMap: Record<NonNullable<BrandLogoProps["size"]>, string> = {
-  sm: "text-lg",
-  md: "text-2xl",
-  lg: "text-4xl",
+  sm: "h-8",
+  md: "h-12",
+  lg: "h-20",
 };
 
-export function BrandLogo({ size = "md", tone = "dark", className }: BrandLogoProps) {
+export function BrandLogo({ size = "md", className }: BrandLogoProps) {
   return (
-    <div
-      className={cn(
-        "font-black tracking-tighter",
-        sizeMap[size],
-        tone === "light" ? "text-white" : "text-foreground",
-        className,
-      )}
-    >
-      Cash<span className="text-primary">Vio</span>
-    </div>
+    <img
+      src={logoSrc}
+      alt="Cash Vio"
+      className={cn(sizeMap[size], "w-auto object-contain", className)}
+    />
   );
 }
 
