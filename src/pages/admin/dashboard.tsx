@@ -61,7 +61,7 @@ export default function AdminDashboard() {
     { label: "Total Users", value: stats?.totalUsers, sub: `${stats?.activeUsers ?? 0} active`, icon: Users, color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/20" },
     { label: "System Balance", value: `${stats?.totalBalanceInSystem ?? 0} USDT`, sub: "across all wallets", icon: Coins, color: "text-yellow-400", bg: "bg-yellow-500/10", border: "border-yellow-500/20" },
     { label: "Total Withdrawn", value: `${stats?.totalWithdrawnAllTime ?? 0} USDT`, sub: "all time", icon: TrendingUp, color: "text-primary", bg: "bg-primary/10", border: "border-primary/20" },
-    { label: "Pending Withdrawals", value: stats?.pendingWithdrawals, sub: "awaiting review", icon: Clock, color: "text-red-400", bg: "bg-red-500/10", border: "border-red-500/20" },
+    { label: "Pending Withdrawals", value: stats?.pendingWithdrawals, sub: "awaiting review", icon: Clock, color: "text-orange-500", bg: "bg-orange-500/10", border: "border-orange-500/20" },
     { label: "Active Platforms", value: stats?.totalPlatforms, sub: "offerwalls", icon: Gamepad2, color: "text-purple-400", bg: "bg-purple-500/10", border: "border-purple-500/20" },
     { label: "Admins", value: "—", sub: "manage access", icon: UserCheck, color: "text-teal-400", bg: "bg-teal-500/10", border: "border-teal-500/20" },
   ];
@@ -236,11 +236,11 @@ export default function AdminDashboard() {
 
             {stats?.pendingWithdrawals && Number(stats.pendingWithdrawals) > 0 ? (
               <CardContent className="p-4 pt-0">
-                <div className="bg-red-500/8 border border-red-500/20 rounded-xl p-3 space-y-2">
-                  <p className="text-xs font-bold text-red-400 uppercase tracking-wider">Action Required</p>
+                <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-3 space-y-2">
+                  <p className="text-xs font-bold text-orange-500 uppercase tracking-wider">Action Required</p>
                   <p className="text-white font-bold text-lg">{stats.pendingWithdrawals} pending</p>
                   <Link href="/admin/withdrawals">
-                    <Button className="bg-red-500 text-white hover:bg-red-600 font-bold w-full text-xs h-8 mt-1">
+                    <Button className="bg-orange-500 text-white hover:bg-orange-600 font-bold w-full text-xs h-8 mt-1">
                       Review Now
                     </Button>
                   </Link>
