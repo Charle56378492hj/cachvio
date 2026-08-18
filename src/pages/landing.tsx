@@ -1,6 +1,23 @@
 import { Link } from "wouter";
+import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from "framer-motion";
+import type { MouseEvent, ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Zap, Coins, Shield, Clock, TrendingUp, Star, Gamepad2, CheckCircle2, Globe, Award } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
+import {
+  ChevronRight,
+  Zap,
+  Coins,
+  Shield,
+  Clock,
+  TrendingUp,
+  Star,
+  Gamepad2,
+  CheckCircle2,
+  Globe,
+  Award,
+  Wallet,
+  ArrowUpRight,
+} from "lucide-react";
 
 const stats = [
   { value: "$2.4M+", label: "Total Paid Out" },
@@ -32,35 +49,126 @@ const steps = [
 
 const partners = ["OfferToro", "CPX Research", "Lootably", "Adgate Media", "BitLabs"];
 
-function CaptaincashLogo({ className = "" }: { className?: string }) {
+/* ─────────────── 3D tilt wrapper ─────────────── */
+function Tilt({
+  children,
+  className = "",
+  strength = 10,
+}: {
+  children: ReactNode;
+  className?: string;
+  strength?: number;
+}) {
+  const reduce = useReducedMotion();
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rx = useSpring(useTransform(my, [-0.5, 0.5], [strength, -strength]), { stiffness: 180, damping: 18 });
+  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-strength, strength]), { stiffness: 180, damping: 18 });
+
+  const onMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (reduce) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
+
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <img src="/logo.jpg" alt="Captain Cash" className="w-8 h-8 rounded-lg object-cover shadow-[0_2px_8px_rgba(220,38,38,0.35)]" />
-      <span className="text-xl font-black tracking-tight text-foreground">
-        Captain <span className="text-primary">Cash</span>
-      </span>
+    <div className={`scene-3d ${className}`}>
+      <motion.div
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
+        style={reduce ? undefined : { rotateX: rx, rotateY: ry }}
+        className="layer-3d h-full"
+      >
+        {children}
+      </motion.div>
     </div>
+  );
+}
+
+function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 26, rotateX: -8 }}
+      whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ─────────────── Floating 3D payout card ─────────────── */
+function PayoutCard() {
+  return (
+    <Tilt strength={14} className="w-full max-w-sm">
+      <div className="relative animate-float">
+        <div className="absolute -inset-6 brand-gradient rounded-[2.5rem] blur-3xl opacity-40" aria-hidden />
+        <div className="relative rounded-[2rem] glass-dark p-6 shadow-brand-lg layer-3d">
+          <div className="flex items-center justify-between depth-1">
+            <div className="flex items-center gap-2 text-white/80 text-xs font-bold uppercase tracking-[0.18em]">
+              <Wallet className="h-4 w-4" /> Balance
+            </div>
+            <span className="rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-white">
+              USDT
+            </span>
+          </div>
+          <div className="mt-5 depth-2">
+            <div className="text-5xl font-black tracking-tighter text-white drop-shadow">$1,284.60</div>
+            <div className="mt-2 flex items-center gap-1.5 text-sm font-bold text-white/85">
+              <ArrowUpRight className="h-4 w-4" /> +$46.20 today
+            </div>
+          </div>
+          <div className="mt-6 space-y-2.5 depth-1">
+            {[
+              { label: "CPX Research", amount: "+$12.40" },
+              { label: "Lootably", amount: "+$21.80" },
+              { label: "BitLabs", amount: "+$12.00" },
+            ].map((row) => (
+              <div
+                key={row.label}
+                className="flex items-center justify-between rounded-xl bg-white/10 px-3.5 py-2.5 text-sm text-white/90 ring-1 ring-white/10"
+              >
+                <span className="font-semibold">{row.label}</span>
+                <span className="font-black">{row.amount}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 depth-3">
+            <div className="rounded-xl bg-white px-4 py-3 text-center text-sm font-black text-primary shadow-lg">
+              Withdrawal approved · 18 min
+            </div>
+          </div>
+        </div>
+      </div>
+    </Tilt>
   );
 }
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-white text-foreground overflow-x-hidden">
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 border-b border-border bg-white/95 backdrop-blur-xl shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
-          <CaptaincashLogo />
-          <div className="hidden md:flex gap-7 text-sm text-muted-foreground items-center">
-            <a href="#how-it-works" className="hover:text-primary transition-colors font-medium">How It Works</a>
-            <a href="#features" className="hover:text-primary transition-colors font-medium">Features</a>
-            <a href="#reviews" className="hover:text-primary transition-colors font-medium">Reviews</a>
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* ─────────── Navbar ─────────── */}
+      <nav className="fixed top-0 z-50 w-full border-b border-border/70 bg-background/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
+          <BrandLogo size="sm" />
+          <div className="hidden items-center gap-8 text-sm font-medium text-muted-foreground md:flex">
+            <a href="#how-it-works" className="transition-colors hover:text-primary">How It Works</a>
+            <a href="#features" className="transition-colors hover:text-primary">Features</a>
+            <a href="#reviews" className="transition-colors hover:text-primary">Reviews</a>
           </div>
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <Link href="/login">
-              <Button variant="ghost" className="font-semibold text-sm text-foreground hover:text-primary">Login</Button>
+              <Button variant="ghost" className="text-sm font-semibold text-foreground hover:text-primary">Login</Button>
             </Link>
             <Link href="/register">
-              <Button className="bg-primary text-white font-bold shadow-[0_2px_10px_rgba(220,38,38,0.3)] text-sm">
+              <Button className="brand-gradient text-sm font-bold text-white shadow-brand transition-transform hover:-translate-y-0.5">
                 Sign Up Free
               </Button>
             </Link>
@@ -68,213 +176,279 @@ export default function Landing() {
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="relative pt-28 pb-20 md:pt-40 md:pb-28 bg-gradient-to-br from-red-700 via-red-600 to-red-500 text-white overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-black/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
-        <div className="absolute inset-0 pointer-events-none opacity-10" style={{backgroundImage: 'linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)', backgroundSize: '40px 40px'}} />
+      {/* ─────────── Hero ─────────── */}
+      <section className="relative overflow-hidden pt-28 pb-20 md:pt-36 md:pb-28">
+        <div className="absolute inset-0 ink-gradient" aria-hidden />
+        <div className="absolute inset-0 grid-overlay-light opacity-60" aria-hidden />
+        <div className="pointer-events-none absolute -top-32 -right-24 h-[30rem] w-[30rem] rounded-full brand-gradient opacity-40 blur-[110px] animate-aurora" aria-hidden />
+        <div className="pointer-events-none absolute -bottom-40 -left-24 h-[26rem] w-[26rem] rounded-full bg-primary-glow/40 blur-[120px] animate-float-slow" aria-hidden />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-4 text-center space-y-6">
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-4 py-1.5 text-sm font-bold">
-            <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-            $2.4M+ Paid Out to Real Users
+        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-7 text-center lg:text-left"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full glass-dark px-4 py-1.5 text-sm font-bold text-white">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-primary-glow" />
+              $2.4M+ Paid Out to Real Users
+            </div>
+
+            <h1 className="text-4xl font-black leading-[0.95] tracking-tighter text-white sm:text-6xl md:text-7xl">
+              Earn Real{" "}
+              <span className="relative inline-block">
+                <span className="brand-text">USDT</span>
+                <span className="absolute -inset-x-2 bottom-1 -z-10 h-3 brand-gradient opacity-30 blur-md" aria-hidden />
+              </span>
+              <br />
+              From Your Phone
+            </h1>
+
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-white/70 lg:mx-0 md:text-xl">
+              Complete premium offers, play games, and withdraw crypto directly to your wallet — no investment, no limits, no tricks.
+            </p>
+
+            <div className="flex flex-col items-center gap-4 pt-1 sm:flex-row lg:justify-start justify-center">
+              <Link href="/register">
+                <Button
+                  size="lg"
+                  className="group h-14 w-full border-0 brand-gradient px-10 text-lg font-black text-white shadow-brand-lg transition-transform hover:-translate-y-1 sm:w-auto"
+                >
+                  Start Earning Free
+                  <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+              <Link href="/login">
+                <Button
+                  size="lg"
+                  className="h-14 w-full glass-dark px-8 font-bold text-white hover:bg-white/20 sm:w-auto"
+                >
+                  I Have an Account
+                </Button>
+              </Link>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-5 pt-1 text-sm text-white/70 lg:justify-start">
+              {["Free to join", "No credit card", "Instant withdrawals"].map((t) => (
+                <span key={t} className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-primary-glow" /> {t}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, rotateY: 18 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="flex justify-center lg:justify-end"
+          >
+            <PayoutCard />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─────────── Partners marquee ─────────── */}
+      <section className="overflow-hidden border-y border-border bg-accent py-3.5">
+        <div className="flex items-center gap-12 whitespace-nowrap px-4 animate-marquee">
+          {[...partners, ...partners, ...partners].map((p, i) => (
+            <span key={i} className="flex-shrink-0 text-xs font-black uppercase tracking-[0.2em] text-accent-foreground/70">
+              {p}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* ─────────── Stats ─────────── */}
+      <section className="border-b border-border bg-background px-4 py-12">
+        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 text-center md:grid-cols-4">
+          {stats.map((s, i) => (
+            <Reveal key={s.label} delay={i * 0.07}>
+              <div className="text-3xl font-black brand-text md:text-4xl">{s.value}</div>
+              <div className="mt-1.5 text-xs font-bold uppercase tracking-widest text-muted-foreground">{s.label}</div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ─────────── How it works ─────────── */}
+      <section id="how-it-works" className="relative bg-background px-4 py-24">
+        <div className="pointer-events-none absolute inset-0 grid-overlay opacity-40" aria-hidden />
+        <div className="relative mx-auto max-w-7xl">
+          <Reveal className="mb-14 text-center">
+            <span className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-primary">Simple Process</span>
+            <h2 className="mb-3 text-3xl font-black tracking-tight text-foreground md:text-5xl">How It Works</h2>
+            <p className="mx-auto max-w-xl text-lg text-muted-foreground">Three simple steps to get crypto in your wallet.</p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {steps.map((step, i) => (
+              <Reveal key={step.num} delay={i * 0.1}>
+                <Tilt strength={8} className="h-full">
+                  <div className="group relative h-full overflow-hidden rounded-3xl glass-card p-8 transition-shadow duration-300 hover:shadow-brand">
+                    <div className="pointer-events-none absolute right-5 top-3 select-none text-7xl font-black text-primary/10 transition-colors group-hover:text-primary/20">
+                      {step.num}
+                    </div>
+                    <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl brand-gradient shadow-brand depth-1">
+                      <step.icon className="h-7 w-7 text-white" />
+                    </div>
+                    <h3 className="mb-3 text-xl font-bold text-foreground depth-1">{step.title}</h3>
+                    <p className="leading-relaxed text-muted-foreground">{step.desc}</p>
+                  </div>
+                </Tilt>
+              </Reveal>
+            ))}
           </div>
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-none drop-shadow-sm">
-            Earn Real <span className="bg-white/20 backdrop-blur-sm rounded-xl px-3 py-1">USDT</span><br />
-            From Your Phone
-          </h1>
-          <p className="text-lg md:text-xl text-red-100 max-w-2xl mx-auto leading-relaxed">
-            Complete premium offers, play games, and withdraw crypto directly to your wallet — no investment, no limits, no tricks.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+        </div>
+      </section>
+
+      {/* ─────────── Features ─────────── */}
+      <section id="features" className="border-y border-border bg-accent/60 px-4 py-24">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="mb-14 text-center">
+            <span className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-primary">Why Cash Vio</span>
+            <h2 className="mb-3 text-3xl font-black tracking-tight text-foreground md:text-5xl">Everything You Need</h2>
+            <p className="text-lg text-muted-foreground">Built to maximize your earnings, secured and verified.</p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map((f, i) => (
+              <Reveal key={f.title} delay={(i % 3) * 0.08}>
+                <Tilt strength={7} className="h-full">
+                  <div className="group h-full rounded-2xl border border-border bg-background p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-brand">
+                    <div className="mb-4 flex items-center gap-3">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-xl brand-gradient shadow-brand transition-transform group-hover:scale-105">
+                        <f.icon className="h-5 w-5 text-white" />
+                      </div>
+                      <h3 className="font-bold text-foreground">{f.title}</h3>
+                    </div>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
+                  </div>
+                </Tilt>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────── Global reach ─────────── */}
+      <section className="border-b border-border bg-background px-4 py-14">
+        <Reveal className="mx-auto max-w-5xl">
+          <div className="flex flex-col items-center justify-between gap-8 rounded-3xl border border-primary/15 bg-gradient-to-r from-accent via-background to-accent p-8 md:flex-row">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl brand-gradient shadow-brand">
+                <Globe className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-black text-foreground">Available Worldwide</h3>
+                <p className="text-sm text-muted-foreground">Withdraw to any BEP20 or TRC20 wallet, anywhere.</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl brand-gradient shadow-brand">
+                <Award className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-black text-foreground">Trusted Platform</h3>
+                <p className="text-sm text-muted-foreground">Transparent system, no hidden fees, verified payouts.</p>
+              </div>
+            </div>
             <Link href="/register">
-              <Button size="lg" className="bg-white text-primary hover:bg-red-50 font-black text-lg px-10 h-14 shadow-xl w-full sm:w-auto group border-0">
-                Start Earning Free
-                <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-            <Link href="/login">
-              <Button size="lg" className="bg-white/15 backdrop-blur-sm border border-white/40 text-white hover:bg-white/25 font-bold h-14 px-8 w-full sm:w-auto">
-                I Have an Account
+              <Button className="h-11 shrink-0 brand-gradient px-8 font-bold text-white shadow-brand transition-transform hover:-translate-y-0.5">
+                Join Now <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             </Link>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-5 text-sm text-red-100 pt-1">
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-white" /> Free to join</span>
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-white" /> No credit card</span>
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-white" /> Instant withdrawals</span>
-          </div>
-        </div>
+        </Reveal>
       </section>
 
-      {/* Partners marquee */}
-      <section className="bg-red-50 border-b border-red-100 py-3 overflow-hidden">
-        <div className="flex items-center gap-10 whitespace-nowrap px-4" style={{animation: 'marquee 18s linear infinite'}}>
-          {[...partners, ...partners].map((p, i) => (
-            <span key={i} className="text-xs font-black text-red-400 uppercase tracking-[0.15em] flex-shrink-0">{p}</span>
-          ))}
-        </div>
-      </section>
+      {/* ─────────── Testimonials ─────────── */}
+      <section id="reviews" className="bg-background px-4 py-24">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="mb-14 text-center">
+            <span className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-primary">Community</span>
+            <h2 className="mb-3 text-3xl font-black tracking-tight text-foreground md:text-5xl">Users Trust Cash Vio</h2>
+            <p className="text-lg text-muted-foreground">Real users, real withdrawals.</p>
+          </Reveal>
 
-      {/* Stats Bar */}
-      <section className="bg-white border-b border-border py-10 px-4">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {stats.map((s) => (
-            <div key={s.label}>
-              <div className="text-3xl md:text-4xl font-black text-primary">{s.value}</div>
-              <div className="text-xs text-muted-foreground mt-1.5 uppercase tracking-widest font-bold">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* How it Works */}
-      <section id="how-it-works" className="py-24 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] mb-3 block">Simple Process</span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-foreground mb-3">How It Works</h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto">Three simple steps to get crypto in your wallet.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {steps.map((step) => (
-              <div key={step.num} className="bg-white border border-border rounded-2xl p-8 relative overflow-hidden group hover:border-primary/40 hover:shadow-[0_4px_24px_rgba(220,38,38,0.08)] transition-all duration-300">
-                <div className="absolute top-4 right-6 text-7xl font-black text-primary/6 select-none group-hover:text-primary/10 transition-colors">{step.num}</div>
-                <div className="bg-primary/10 w-14 h-14 rounded-xl flex items-center justify-center mb-6 border border-primary/20">
-                  <step.icon className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-foreground">{step.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{step.desc}</p>
-              </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {testimonials.map((t, i) => (
+              <Reveal key={t.name} delay={i * 0.1}>
+                <Tilt strength={8} className="h-full">
+                  <div className="h-full rounded-3xl glass-card p-6 transition-shadow duration-300 hover:shadow-brand">
+                    <div className="mb-4 flex items-center gap-1">
+                      {[1, 2, 3, 4, 5].map((n) => (
+                        <Star key={n} className="h-4 w-4 fill-primary text-primary" />
+                      ))}
+                    </div>
+                    <p className="mb-5 text-sm leading-relaxed text-muted-foreground">"{t.text}"</p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-sm font-bold text-foreground">{t.name}</div>
+                        <div className="mt-0.5 text-xs font-bold text-primary">{t.amount}</div>
+                      </div>
+                      <div className="flex h-9 w-9 items-center justify-center rounded-full brand-gradient shadow-brand">
+                        <Coins className="h-4 w-4 text-white" />
+                      </div>
+                    </div>
+                  </div>
+                </Tilt>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section id="features" className="py-24 bg-red-50/60 border-y border-red-100 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] mb-3 block">Why Captain Cash</span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-foreground mb-3">Everything You Need</h2>
-            <p className="text-muted-foreground text-lg">Built to maximize your earnings, secured and verified.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {features.map((f) => (
-              <div key={f.title} className="bg-white border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-[0_4px_20px_rgba(220,38,38,0.07)] transition-all duration-200 group">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary/20 transition-colors">
-                    <f.icon className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="font-bold text-foreground">{f.title}</h3>
-                </div>
-                <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ─────────── CTA ─────────── */}
+      <section className="relative overflow-hidden px-4 py-24">
+        <div className="absolute inset-0 ink-gradient" aria-hidden />
+        <div className="absolute inset-0 grid-overlay-light opacity-50" aria-hidden />
+        <div className="pointer-events-none absolute -top-24 left-1/3 h-96 w-96 rounded-full brand-gradient opacity-40 blur-[120px] animate-aurora" aria-hidden />
 
-      {/* Global Reach Banner */}
-      <section className="py-14 px-4 bg-white border-b border-border">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 bg-gradient-to-r from-primary/8 via-primary/5 to-primary/8 border border-primary/15 rounded-2xl p-8">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center shrink-0">
-              <Globe className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-lg font-black text-foreground">Available Worldwide</h3>
-              <p className="text-muted-foreground text-sm">Withdraw to any BEP20 or TRC20 wallet, anywhere.</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/25 flex items-center justify-center shrink-0">
-              <Award className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-lg font-black text-foreground">Trusted Platform</h3>
-              <p className="text-muted-foreground text-sm">Transparent system, no hidden fees, verified payouts.</p>
-            </div>
-          </div>
-          <Link href="/register">
-            <Button className="bg-primary text-white font-bold px-8 h-11 shadow-[0_2px_12px_rgba(220,38,38,0.3)] shrink-0">
-              Join Now <ChevronRight className="ml-1 h-4 w-4" />
-            </Button>
-          </Link>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section id="reviews" className="py-24 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <span className="text-xs font-bold text-primary uppercase tracking-[0.2em] mb-3 block">Community</span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-foreground mb-3">Users Trust Captain Cash</h2>
-            <p className="text-muted-foreground text-lg">Real users, real withdrawals.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((t) => (
-              <div key={t.name} className="bg-white border border-border rounded-2xl p-6 hover:border-primary/30 hover:shadow-[0_4px_20px_rgba(220,38,38,0.06)] transition-all duration-200">
-                <div className="flex items-center gap-1 mb-4">
-                  {[1,2,3,4,5].map(i => <Star key={i} className="h-4 w-4 fill-primary text-primary" />)}
-                </div>
-                <p className="text-muted-foreground leading-relaxed mb-5 text-sm">"{t.text}"</p>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-bold text-foreground text-sm">{t.name}</div>
-                    <div className="text-xs text-primary font-bold mt-0.5">{t.amount}</div>
-                  </div>
-                  <div className="w-9 h-9 bg-primary/10 border border-primary/20 rounded-full flex items-center justify-center">
-                    <Coins className="h-4 w-4 text-primary" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Banner */}
-      <section className="py-24 px-4 bg-gradient-to-br from-red-700 via-red-600 to-red-500 text-white relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none opacity-10" style={{backgroundImage: 'linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)', backgroundSize: '40px 40px'}} />
-        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter">
-            Start Earning<br />Today — It's Free
+        <Reveal className="relative z-10 mx-auto max-w-4xl space-y-6 text-center">
+          <h2 className="text-4xl font-black tracking-tighter text-white md:text-6xl">
+            Start Earning
+            <br />
+            Today — <span className="brand-text">It's Free</span>
           </h2>
-          <p className="text-xl text-red-100 max-w-xl mx-auto">Join 85,000+ users already earning USDT. No investment required.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+          <p className="mx-auto max-w-xl text-xl text-white/70">
+            Join 85,000+ users already earning USDT. No investment required.
+          </p>
+          <div className="flex flex-col justify-center gap-4 pt-2 sm:flex-row">
             <Link href="/register">
-              <Button size="lg" className="bg-white text-primary hover:bg-red-50 font-black text-lg px-12 h-14 shadow-xl w-full sm:w-auto border-0">
+              <Button
+                size="lg"
+                className="h-14 w-full border-0 brand-gradient px-12 text-lg font-black text-white shadow-brand-lg transition-transform hover:-translate-y-1 sm:w-auto"
+              >
                 Create Free Account
               </Button>
             </Link>
             <Link href="/login">
-              <Button size="lg" className="bg-white/15 border border-white/40 text-white hover:bg-white/25 font-bold h-14 px-10 w-full sm:w-auto">
+              <Button size="lg" className="h-14 w-full glass-dark px-10 font-bold text-white hover:bg-white/20 sm:w-auto">
                 Sign In
               </Button>
             </Link>
           </div>
-          <p className="text-sm text-red-100">Minimum withdrawal: $1 USDT · BEP20, TRC20, Sham Cash, Syriatel Cash & Coenex supported</p>
-        </div>
+          <p className="text-sm text-white/60">
+            Minimum withdrawal: $1 USDT · BEP20, TRC20, Sham Cash, Syriatel Cash &amp; Coenex supported
+          </p>
+        </Reveal>
       </section>
 
-      <footer className="border-t border-border bg-white py-10 px-4">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <CaptaincashLogo />
-          <p className="text-muted-foreground text-sm">© {new Date().getFullYear()} Captain Cash. All rights reserved.</p>
+      {/* ─────────── Footer ─────────── */}
+      <footer className="border-t border-border bg-background px-4 py-10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
+          <BrandLogo size="sm" />
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Cash Vio. All rights reserved.
+          </p>
           <div className="flex gap-6 text-sm text-muted-foreground">
-            <Link href="/register"><span className="hover:text-primary cursor-pointer transition-colors">Sign Up</span></Link>
-            <Link href="/login"><span className="hover:text-primary cursor-pointer transition-colors">Login</span></Link>
+            <Link href="/register"><span className="cursor-pointer transition-colors hover:text-primary">Sign Up</span></Link>
+            <Link href="/login"><span className="cursor-pointer transition-colors hover:text-primary">Login</span></Link>
           </div>
         </div>
       </footer>
-
-      <style>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-      `}</style>
     </div>
   );
 }
