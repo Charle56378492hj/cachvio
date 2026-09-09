@@ -240,3 +240,122 @@
   .animate-float, .animate-float-slow, .animate-spin-slow,
   .animate-shine, .animate-marquee, .animate-aurora { animation: none; }
 }
+
+/* ── Enhanced Image Effects ── */
+.image-hover { 
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.image-hover:hover { 
+  transform: scale(1.08) translateY(-4px);
+  filter: brightness(1.15) saturate(1.2);
+}
+
+/* ── Button Enhanced Effects ── */
+.btn-gradient-glow {
+  position: relative;
+  background: linear-gradient(135deg, #844ace 0%, #d946ef 100%);
+  overflow: hidden;
+}
+
+.btn-gradient-glow::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 1%, transparent 70%);
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.4s ease-out;
+  pointer-events: none;
+}
+
+.btn-gradient-glow:hover::before {
+  transform: translate3d(100px, 100px, 0);
+}
+
+/* ── Card Hover Effects ── */
+.card-lift {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 24px 48px rgba(132, 74, 222, 0.25);
+}
+
+/* ── Image Overlay Effects ── */
+.image-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 30%, rgba(132, 74, 222, 0.1) 100%);
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+  opacity: 0;
+}
+
+.image-overlay:hover::after {
+  opacity: 1;
+}
+
+/* ── Smooth Shadows ── */
+.shadow-smooth {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+              0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-smooth:hover {
+  box-shadow: 0 16px 48px rgba(132, 74, 222, 0.15),
+              0 8px 24px rgba(132, 74, 222, 0.08);
+}
+
+/* ── Loading Animation ── */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.2) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ── Smooth Transitions ── */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Hover Elevate ── */
+.hover-elevate {
+  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-elevate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(132, 74, 222, 0.15);
+}
+
+.active-elevate-2:active {
+  transform: translateY(0px);
+  box-shadow: 0 4px 12px rgba(132, 74, 222, 0.08);
+}
+
+/* ── Badge Animation ── */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217, 70, 239, 0.7); }
+  50% { box-shadow: 0 0 0 6px rgba(217, 70, 239, 0); }
+}
+
+.badge-glow {
+  animation: pulse-glow 2s infinite;
+}
