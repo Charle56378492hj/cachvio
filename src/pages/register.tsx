@@ -40,7 +40,7 @@ export default function Register() {
       customFetch<AuthResponse>("/api/auth/register", { method: "POST", body: JSON.stringify(data) }),
     onSuccess: (res) => {
       setToken(res.token);
-      toast({ title: "Welcome to Cash Vio!" });
+      toast({ title: "Welcome to Foxe Earn!" });
       setLocation("/dashboard");
     },
     onError: (error: any) => {
