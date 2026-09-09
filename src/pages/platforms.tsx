@@ -44,9 +44,9 @@ export default function Platforms() {
           <p className="text-muted-foreground text-sm mt-1">Select a platform to start earning USDT.</p>
         </Reveal>
 
-        <div className="flex flex-col lg:flex-row gap-4" style={{ height: "calc(100vh - 190px)", minHeight: "520px" }}>
+        <div className="platforms-workspace flex flex-col lg:flex-row gap-4">
           {/* Platform List */}
-          <div className="w-full lg:w-64 shrink-0 flex flex-col gap-2 overflow-y-auto pr-1">
+          <div className="platform-list w-full lg:w-72 shrink-0 flex flex-col gap-2 overflow-y-auto pr-1">
             {loadingPlatforms ? (
               Array.from({ length: 5 }).map((_, i) => (
                 <Skeleton key={i} className="h-16 w-full rounded-xl" />

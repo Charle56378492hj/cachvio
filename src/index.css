@@ -221,6 +221,23 @@
     -webkit-backdrop-filter: blur(20px);
   }
 
+  /* Platforms: keep the workspace stable while the vertical list grows. */
+  .platforms-workspace {
+    height: calc(100vh - 175px);
+    min-height: 640px;
+    max-height: 900px;
+  }
+  .platform-list {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.45) transparent;
+  }
+  .platform-list::-webkit-scrollbar { width: 6px; }
+  .platform-list::-webkit-scrollbar-track { background: transparent; }
+  .platform-list::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.45);
+    border-radius: 999px;
+  }
+
   .grid-overlay {
     background-image:
       linear-gradient(hsl(var(--primary) / 0.10) 1px, transparent 1px),
@@ -269,6 +286,15 @@
 }
 
 @media (max-width: 767px) {
+  .platforms-workspace {
+    height: calc(100svh - 205px);
+    min-height: 600px;
+    max-height: none;
+  }
+  .platform-list {
+    height: 245px;
+    overflow-y: auto;
+  }
   .hero-background,
   .auth-background { background-position: 50% 18%; }
   .hero-overlay {
