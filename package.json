@@ -1,6 +1,7 @@
 {
-  "name": "cash-vio",
-  "version": "1.0.0",
+  "name": "foxe-earn",
+  "description": "Foxe Earn - Earn money playing games, completing surveys, and more. Join 150K+ users earning real cash instantly.",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "engines": {
