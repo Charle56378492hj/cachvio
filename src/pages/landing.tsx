@@ -20,31 +20,31 @@ import {
 } from "lucide-react";
 
 const stats = [
-  { value: "$2.4M+", label: "Total Paid Out" },
-  { value: "85K+", label: "Active Users" },
-  { value: "5+", label: "Offerwall Partners" },
-  { value: "<24h", label: "Avg Withdrawal" },
+  { value: "$5.2M+", label: "Total Paid Out" },
+  { value: "150K+", label: "Active Users" },
+  { value: "8+", label: "Earning Methods" },
+  { value: "< 2 Hours", label: "Avg Withdrawal" },
 ];
 
 const features = [
-  { icon: Gamepad2, title: "5+ Premium Offerwalls", desc: "OfferToro, CPX Research, Lootably, Adgate Media, BitLabs — all in one platform." },
-  { icon: Coins, title: "Instant USDT Payouts", desc: "Withdraw to BEP20 or TRC20 wallets with zero hidden fees." },
-  { icon: Zap, title: "Real-Time Balance", desc: "Earnings appear the moment an offer is credited to your account." },
-  { icon: Shield, title: "Verified & Secure", desc: "Every withdrawal is reviewed before processing to keep you safe." },
-  { icon: Clock, title: "Fast Processing", desc: "Most withdrawals are processed within 24 hours of approval." },
-  { icon: TrendingUp, title: "No Earning Cap", desc: "Complete unlimited offers and grow your balance as high as you want." },
+  { icon: Gamepad2, title: "Play Games & Earn", desc: "Enjoy premium games while earning real money. No limits on your earnings." },
+  { icon: Coins, title: "Complete Surveys", desc: "Share your opinion on products and services. Quick surveys, instant rewards." },
+  { icon: Zap, title: "Watch Videos", desc: "Watch short, engaging videos and earn credits instantly to your account." },
+  { icon: Shield, title: "Secure & Verified", desc: "Every withdrawal is secured and verified. Your safety is our priority." },
+  { icon: Clock, title: "Fast Payouts", desc: "Get paid within hours. Direct to your wallet with zero delays." },
+  { icon: TrendingUp, title: "Unlimited Earning", desc: "No caps on earnings. Work as much as you want and earn unlimited." },
 ];
 
 const testimonials = [
-  { name: "ProGamer_99", amount: "$320 withdrawn", text: "Cashed out three times already. Always fast and accurate. Best GPT site I've used." },
-  { name: "CryptoKing88", amount: "$150 withdrawn", text: "The UI is clean, USDT payouts are real. No shady business, just straight earnings." },
-  { name: "OfferHunter", amount: "$500+ withdrawn", text: "Been here since day one. The offerwalls pay and support is responsive." },
+  { name: "Ahmed_Pro", amount: "$850 withdrawn", text: "I've earned over $850 in just 3 months. Foxe Earn is the most reliable platform I've used. Payouts are instant and no hidden fees." },
+  { name: "Fatima_Games", amount: "$560 withdrawn", text: "Love playing games while earning. The UI is super clean and games pay well. Already withdrew 5 times, never had any issues." },
+  { name: "Hassan_Surv", amount: "$1200+ withdrawn", text: "Been earning since day one. Surveys and tasks pay fairly. Support team is amazing. This is the best earning platform." },
 ];
 
 const steps = [
-  { num: "01", icon: Gamepad2, title: "Choose an Offer", desc: "Browse our premium offerwalls and select the games and tasks that pay the most." },
-  { num: "02", icon: Zap, title: "Complete & Earn", desc: "Finish tasks or reach game levels. Your balance updates instantly upon completion." },
-  { num: "03", icon: Coins, title: "Withdraw Crypto", desc: "Request USDT via BEP20 or TRC20. Processed within 24 hours to your wallet." },
+  { num: "01", icon: Gamepad2, title: "Choose Your Task", desc: "Pick from games, surveys, videos, and offers that interest you. Each task shows how much you'll earn upfront." },
+  { num: "02", icon: Zap, title: "Complete & Earn Instantly", desc: "Play, watch, or complete tasks. Your earnings are credited instantly to your Foxe Earn wallet." },
+  { num: "03", icon: Coins, title: "Cash Out Anytime", desc: "Withdraw to your crypto wallet or bank account. Processed in minutes with zero fees." },
 ];
 
 const partners = ["OfferToro", "CPX Research", "Lootably", "Adgate Media", "BitLabs"];
@@ -192,21 +192,21 @@ export default function Landing() {
           >
             <div className="inline-flex items-center gap-2 rounded-full glass-dark px-4 py-1.5 text-sm font-bold text-white">
               <span className="h-2 w-2 animate-pulse rounded-full bg-primary-glow" />
-              $2.4M+ Paid Out to Real Users
+              $5.2M+ Paid Out to Real Users
             </div>
 
             <h1 className="text-4xl font-black leading-[0.95] tracking-tighter text-white sm:text-6xl md:text-7xl">
-              Earn Real{" "}
+              Earn Real Money{" "}
               <span className="relative inline-block">
-                <span className="brand-text">USDT</span>
+                <span className="brand-text">Fast & Easy</span>
                 <span className="absolute -inset-x-2 bottom-1 -z-10 h-3 brand-gradient opacity-30 blur-md" aria-hidden />
               </span>
               <br />
-              From Your Phone
+              Right From Home
             </h1>
 
             <p className="mx-auto max-w-2xl text-lg leading-relaxed text-white/70 lg:mx-0 md:text-xl">
-              Complete premium offers, play games, and withdraw crypto directly to your wallet — no investment, no limits, no tricks.
+              Play games, complete surveys, watch videos and earn real cash. Join 150K+ users earning daily. No investment needed, no hidden fees, instant payouts.
             </p>
 
             <div className="flex flex-col items-center gap-4 pt-1 sm:flex-row lg:justify-start justify-center">
@@ -303,13 +303,78 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ─────────── Gallery Section ─────────── */}
+      <section className="border-b border-border bg-background px-4 py-24">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="mb-16 text-center">
+            <span className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-primary">Visual Features</span>
+            <h2 className="mb-3 text-3xl font-black tracking-tight text-foreground md:text-5xl">See How It Works</h2>
+            <p className="text-lg text-muted-foreground">Beautiful UI with smooth animations and powerful earning tools.</p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { img: "/images/02_play_games_upscaled.png", title: "Play Games", desc: "Enjoy premium games and earn rewards" },
+              { img: "/images/03_complete_surveys_upscaled.png", title: "Complete Surveys", desc: "Share opinions and get paid instantly" },
+              { img: "/images/04_watch_and_earn_upscaled.png", title: "Watch Videos", desc: "Watch content and accumulate earnings" },
+              { img: "/images/05_gift_cards_upscaled.png", title: "Gift Cards", desc: "Redeem for popular gift cards" },
+            ].map((item, i) => (
+              <Reveal key={item.title} delay={i * 0.1}>
+                <Tilt strength={6} className="h-full">
+                  <div className="group relative h-full overflow-hidden rounded-2xl glass-card transition-all duration-300 hover:shadow-brand">
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      <h3 className="font-bold text-white text-lg">{item.title}</h3>
+                      <p className="text-sm text-white/80">{item.desc}</p>
+                    </div>
+                  </div>
+                </Tilt>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {[
+              { img: "/images/06_top_gift_cards_upscaled.png", title: "Top Gift Cards", desc: "Access premium gift card options" },
+              { img: "/images/07_fast_secure_withdrawals_upscaled.png", title: "Fast & Secure", desc: "Instant withdrawals to your wallet" },
+              { img: "/images/08_invite_friends_upscaled.png", title: "Invite Friends", desc: "Earn commissions from referrals" },
+              { img: "/images/01_top_hero_4K.png", title: "Premium Experience", desc: "Professional platform for serious earners" },
+            ].map((item, i) => (
+              <Reveal key={item.title} delay={(i % 2) * 0.1}>
+                <Tilt strength={5} className="h-full">
+                  <div className="group relative h-full overflow-hidden rounded-2xl glass-card transition-all duration-300 hover:shadow-brand">
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      <h3 className="font-bold text-white text-xl">{item.title}</h3>
+                      <p className="text-sm text-white/80 mt-1">{item.desc}</p>
+                    </div>
+                  </div>
+                </Tilt>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ─────────── Features ─────────── */}
       <section id="features" className="border-y border-border bg-accent/60 px-4 py-24">
         <div className="mx-auto max-w-7xl">
           <Reveal className="mb-14 text-center">
-            <span className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-primary">Why Cash Vio</span>
-            <h2 className="mb-3 text-3xl font-black tracking-tight text-foreground md:text-5xl">Everything You Need</h2>
-            <p className="text-lg text-muted-foreground">Built to maximize your earnings, secured and verified.</p>
+            <span className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-primary">Why Choose Foxe Earn</span>
+            <h2 className="mb-3 text-3xl font-black tracking-tight text-foreground md:text-5xl">Multiple Ways to Earn</h2>
+            <p className="text-lg text-muted-foreground">Play games, complete surveys, watch videos, invite friends and more. Start earning today!</p>
           </Reveal>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -367,9 +432,9 @@ export default function Landing() {
       <section id="reviews" className="bg-background px-4 py-24">
         <div className="mx-auto max-w-7xl">
           <Reveal className="mb-14 text-center">
-            <span className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-primary">Community</span>
-            <h2 className="mb-3 text-3xl font-black tracking-tight text-foreground md:text-5xl">Users Trust Cash Vio</h2>
-            <p className="text-lg text-muted-foreground">Real users, real withdrawals.</p>
+            <span className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-primary">Community Trust</span>
+            <h2 className="mb-3 text-3xl font-black tracking-tight text-foreground md:text-5xl">150K+ Users Love Foxe Earn</h2>
+            <p className="text-lg text-muted-foreground">Real users, real money, real results.</p>
           </Reveal>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -441,7 +506,7 @@ export default function Landing() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
           <BrandLogo size="sm" />
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Cash Vio. All rights reserved.
+            © {new Date().getFullYear()} Foxe Earn. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-muted-foreground">
             <Link href="/register"><span className="cursor-pointer transition-colors hover:text-primary">Sign Up</span></Link>
