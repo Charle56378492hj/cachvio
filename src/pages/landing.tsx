@@ -7,14 +7,8 @@ import {
   ChevronRight,
   Zap,
   Coins,
-  Shield,
-  Clock,
-  TrendingUp,
-  Star,
   Gamepad2,
   CheckCircle2,
-  Globe,
-  Award,
   Wallet,
   ArrowUpRight,
 } from "lucide-react";
@@ -24,21 +18,6 @@ const stats = [
   { value: "150K+", label: "Active Users" },
   { value: "8+", label: "Earning Methods" },
   { value: "< 2 Hours", label: "Avg Withdrawal" },
-];
-
-const features = [
-  { icon: Gamepad2, title: "Play Games & Earn", desc: "Enjoy premium games while earning real money. No limits on your earnings." },
-  { icon: Coins, title: "Complete Surveys", desc: "Share your opinion on products and services. Quick surveys, instant rewards." },
-  { icon: Zap, title: "Watch Videos", desc: "Watch short, engaging videos and earn credits instantly to your account." },
-  { icon: Shield, title: "Secure & Verified", desc: "Every withdrawal is secured and verified. Your safety is our priority." },
-  { icon: Clock, title: "Fast Payouts", desc: "Get paid within hours. Direct to your wallet with zero delays." },
-  { icon: TrendingUp, title: "Unlimited Earning", desc: "No caps on earnings. Work as much as you want and earn unlimited." },
-];
-
-const testimonials = [
-  { name: "Ahmed_Pro", amount: "$850 withdrawn", text: "I've earned over $850 in just 3 months. Foxe Earn is the most reliable platform I've used. Payouts are instant and no hidden fees." },
-  { name: "Fatima_Games", amount: "$560 withdrawn", text: "Love playing games while earning. The UI is super clean and games pay well. Already withdrew 5 times, never had any issues." },
-  { name: "Hassan_Surv", amount: "$1200+ withdrawn", text: "Been earning since day one. Surveys and tasks pay fairly. Support team is amazing. This is the best earning platform." },
 ];
 
 const steps = [
@@ -160,8 +139,6 @@ export default function Landing() {
           <BrandLogo size="sm" />
           <div className="hidden items-center gap-8 text-sm font-medium text-muted-foreground md:flex">
             <a href="#how-it-works" className="transition-colors hover:text-primary">How It Works</a>
-            <a href="#features" className="transition-colors hover:text-primary">Features</a>
-            <a href="#reviews" className="transition-colors hover:text-primary">Reviews</a>
           </div>
           <div className="flex items-center gap-2">
             <Link href="/login">
@@ -369,107 +346,11 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ─────────── Features ─────────── */}
-      <section id="features" className="border-y border-border bg-accent/60 px-4 py-24">
-        <div className="mx-auto max-w-7xl">
-          <Reveal className="mb-14 text-center">
-            <span className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-primary">Why Choose Foxe Earn</span>
-            <h2 className="mb-3 text-3xl font-black tracking-tight text-foreground md:text-5xl">Multiple Ways to Earn</h2>
-            <p className="text-lg text-muted-foreground">Play games, complete surveys, watch videos, invite friends and more. Start earning today!</p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((f, i) => (
-              <Reveal key={f.title} delay={(i % 3) * 0.08}>
-                <Tilt strength={7} className="h-full">
-                  <div className="group h-full rounded-2xl border border-border bg-background p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-brand">
-                    <div className="mb-4 flex items-center gap-3">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl brand-gradient shadow-brand transition-transform group-hover:scale-105">
-                        <f.icon className="h-5 w-5 text-white" />
-                      </div>
-                      <h3 className="font-bold text-foreground">{f.title}</h3>
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
-                  </div>
-                </Tilt>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────── Global reach ─────────── */}
-      <section className="border-b border-border bg-background px-4 py-14">
-        <Reveal className="mx-auto max-w-5xl">
-          <div className="flex flex-col items-center justify-between gap-8 rounded-3xl border border-primary/15 bg-gradient-to-r from-accent via-background to-accent p-8 md:flex-row">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl brand-gradient shadow-brand">
-                <Globe className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-black text-foreground">Available Worldwide</h3>
-                <p className="text-sm text-muted-foreground">Withdraw to any BEP20 or TRC20 wallet, anywhere.</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl brand-gradient shadow-brand">
-                <Award className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-black text-foreground">Trusted Platform</h3>
-                <p className="text-sm text-muted-foreground">Transparent system, no hidden fees, verified payouts.</p>
-              </div>
-            </div>
-            <Link href="/register">
-              <Button className="h-11 shrink-0 brand-gradient px-8 font-bold text-white shadow-brand transition-transform hover:-translate-y-0.5">
-                Join Now <ChevronRight className="ml-1 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* ─────────── Testimonials ─────────── */}
-      <section id="reviews" className="bg-background px-4 py-24">
-        <div className="mx-auto max-w-7xl">
-          <Reveal className="mb-14 text-center">
-            <span className="mb-3 block text-xs font-bold uppercase tracking-[0.24em] text-primary">Community Trust</span>
-            <h2 className="mb-3 text-3xl font-black tracking-tight text-foreground md:text-5xl">150K+ Users Love Foxe Earn</h2>
-            <p className="text-lg text-muted-foreground">Real users, real money, real results.</p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {testimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.1}>
-                <Tilt strength={8} className="h-full">
-                  <div className="h-full rounded-3xl glass-card p-6 transition-shadow duration-300 hover:shadow-brand">
-                    <div className="mb-4 flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <Star key={n} className="h-4 w-4 fill-primary text-primary" />
-                      ))}
-                    </div>
-                    <p className="mb-5 text-sm leading-relaxed text-muted-foreground">"{t.text}"</p>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-sm font-bold text-foreground">{t.name}</div>
-                        <div className="mt-0.5 text-xs font-bold text-primary">{t.amount}</div>
-                      </div>
-                      <div className="flex h-9 w-9 items-center justify-center rounded-full brand-gradient shadow-brand">
-                        <Coins className="h-4 w-4 text-white" />
-                      </div>
-                    </div>
-                  </div>
-                </Tilt>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ─────────── CTA ─────────── */}
       <section className="relative overflow-hidden px-4 py-24">
-        <div className="absolute inset-0 ink-gradient" aria-hidden />
-        <div className="absolute inset-0 grid-overlay-light opacity-50" aria-hidden />
+        <div className="hero-background absolute inset-0" aria-hidden />
+        <div className="hero-overlay absolute inset-0" aria-hidden />
+        <div className="absolute inset-0 grid-overlay-light opacity-30" aria-hidden />
         <div className="pointer-events-none absolute -top-24 left-1/3 h-96 w-96 rounded-full brand-gradient opacity-40 blur-[120px] animate-aurora" aria-hidden />
 
         <Reveal className="relative z-10 mx-auto max-w-4xl space-y-6 text-center">
