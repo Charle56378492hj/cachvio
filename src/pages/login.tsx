@@ -61,6 +61,7 @@ export default function Login() {
         <div className="absolute inset-0 grid-overlay-light opacity-60" aria-hidden />
         <div className="pointer-events-none absolute -top-24 -left-16 h-[26rem] w-[26rem] rounded-full brand-gradient opacity-40 blur-[110px] animate-aurora" aria-hidden />
         <div className="pointer-events-none absolute -bottom-28 right-0 h-80 w-80 rounded-full bg-primary-glow/40 blur-[110px] animate-float-slow" aria-hidden />
+        <img src="/images/01_top_hero_4K.png" alt="Foxe Earn" className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-20" />
 
         <motion.div
           initial={{ opacity: 0, y: 24, rotateY: -14 }}
@@ -178,7 +179,7 @@ export default function Login() {
           </div>
 
           <div className="mt-6 text-center text-sm text-muted-foreground">
-            New to Cash Vio?{" "}
+            New to Foxe Earn?{" "}
             <Link href="/register">
               <span className="cursor-pointer font-semibold text-primary hover:underline">Create account</span>
             </Link>
