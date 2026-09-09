@@ -1,5 +1,5 @@
 /**
- * Cash Vio — Zod validation schemas
+ * Foxe Earn — Zod validation schemas
  */
 import * as zod from "zod";
 
