@@ -194,6 +194,33 @@
     border: 1px solid rgba(255,255,255,0.18);
   }
 
+  /* Shared artwork backgrounds: one optimized asset, responsive positioning. */
+  .hero-background,
+  .auth-background {
+    background-image: url('/assets/cachvio-hero.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center 24%;
+    transform: translateZ(0);
+  }
+  .hero-overlay {
+    background:
+      linear-gradient(90deg, rgba(3, 8, 18, 0.92) 0%, rgba(3, 8, 18, 0.76) 45%, rgba(3, 8, 18, 0.5) 100%),
+      linear-gradient(180deg, rgba(3, 8, 18, 0.35) 0%, rgba(3, 8, 18, 0.12) 42%, rgba(3, 8, 18, 0.78) 100%);
+  }
+  .auth-overlay {
+    background:
+      linear-gradient(90deg, rgba(3, 8, 18, 0.84) 0%, rgba(3, 8, 18, 0.60) 48%, rgba(3, 8, 18, 0.78) 100%),
+      linear-gradient(180deg, rgba(3, 8, 18, 0.35), rgba(3, 8, 18, 0.78));
+  }
+  .auth-form-panel {
+    background: rgba(6, 12, 24, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
   .grid-overlay {
     background-image:
       linear-gradient(hsl(var(--primary) / 0.10) 1px, transparent 1px),
@@ -239,6 +266,17 @@
 @media (prefers-reduced-motion: reduce) {
   .animate-float, .animate-float-slow, .animate-spin-slow,
   .animate-shine, .animate-marquee, .animate-aurora { animation: none; }
+}
+
+@media (max-width: 767px) {
+  .hero-background,
+  .auth-background { background-position: 50% 18%; }
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(3, 8, 18, 0.62) 0%, rgba(3, 8, 18, 0.48) 35%, rgba(3, 8, 18, 0.9) 100%);
+  }
+  .auth-overlay {
+    background: linear-gradient(180deg, rgba(3, 8, 18, 0.52) 0%, rgba(3, 8, 18, 0.86) 100%);
+  }
 }
 
 /* ── Enhanced Image Effects ── */

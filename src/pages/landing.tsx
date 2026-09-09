@@ -177,9 +177,10 @@ export default function Landing() {
       </nav>
 
       {/* ─────────── Hero ─────────── */}
-      <section className="relative overflow-hidden pt-28 pb-20 md:pt-36 md:pb-28">
-        <div className="absolute inset-0 ink-gradient" aria-hidden />
-        <div className="absolute inset-0 grid-overlay-light opacity-60" aria-hidden />
+      <section className="hero-section relative overflow-hidden pt-28 pb-20 md:pt-36 md:pb-28">
+        <div className="hero-background absolute inset-0" aria-hidden />
+        <div className="hero-overlay absolute inset-0" aria-hidden />
+        <div className="absolute inset-0 grid-overlay-light opacity-30" aria-hidden />
         <div className="pointer-events-none absolute -top-32 -right-24 h-[30rem] w-[30rem] rounded-full brand-gradient opacity-40 blur-[110px] animate-aurora" aria-hidden />
         <div className="pointer-events-none absolute -bottom-40 -left-24 h-[26rem] w-[26rem] rounded-full bg-primary-glow/40 blur-[120px] animate-float-slow" aria-hidden />
 

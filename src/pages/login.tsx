@@ -54,14 +54,14 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="relative flex min-h-screen overflow-hidden bg-[#030812]">
+      <div className="auth-background absolute inset-0" aria-hidden />
+      <div className="auth-overlay absolute inset-0" aria-hidden />
       {/* ── Left 3D brand panel ── */}
       <div className="relative hidden flex-1 items-center justify-center overflow-hidden p-12 lg:flex">
-        <div className="absolute inset-0 ink-gradient" aria-hidden />
         <div className="absolute inset-0 grid-overlay-light opacity-60" aria-hidden />
         <div className="pointer-events-none absolute -top-24 -left-16 h-[26rem] w-[26rem] rounded-full brand-gradient opacity-40 blur-[110px] animate-aurora" aria-hidden />
         <div className="pointer-events-none absolute -bottom-28 right-0 h-80 w-80 rounded-full bg-primary-glow/40 blur-[110px] animate-float-slow" aria-hidden />
-        <img src="/images/01_top_hero_4K.png" alt="Foxe Earn" className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-20" />
 
         <motion.div
           initial={{ opacity: 0, y: 24, rotateY: -14 }}
@@ -100,7 +100,7 @@ export default function Login() {
       </div>
 
       {/* ── Right form ── */}
-      <div className="relative flex flex-1 flex-col items-center justify-center px-8 py-12 lg:max-w-lg">
+      <div className="relative flex min-h-screen flex-1 flex-col items-center justify-center px-5 py-10 sm:px-8 lg:max-w-lg">
         <div className="pointer-events-none absolute inset-0 grid-overlay opacity-40 lg:hidden" aria-hidden />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -112,13 +112,13 @@ export default function Login() {
             <div className="mb-6 flex justify-center lg:hidden">
               <BrandLogo size="md" />
             </div>
-            <h1 className="text-3xl font-black tracking-tight text-foreground">Sign In</h1>
-            <p className="mt-1.5 text-sm text-muted-foreground">
+            <h1 className="text-3xl font-black tracking-tight text-white">Sign In</h1>
+            <p className="mt-1.5 text-sm text-white/70">
               Enter your credentials to access your account.
             </p>
           </div>
 
-          <div className="rounded-3xl glass-card p-6 shadow-brand">
+          <div className="auth-form-panel rounded-3xl p-6 shadow-brand sm:p-7">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                 <FormField
@@ -178,7 +178,7 @@ export default function Login() {
             </Form>
           </div>
 
-          <div className="mt-6 text-center text-sm text-muted-foreground">
+          <div className="mt-6 text-center text-sm text-white/70">
             New to Foxe Earn?{" "}
             <Link href="/register">
               <span className="cursor-pointer font-semibold text-primary hover:underline">Create account</span>
