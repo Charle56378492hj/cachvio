@@ -1,5 +1,5 @@
 /**
- * Cash Vio — API type schemas
+ * Foxe Earn — API type schemas
  */
 export interface HealthStatus {
   status: string;
