@@ -317,32 +317,6 @@ export default function Landing() {
             ))}
           </div>
 
-          <div className="mt-16 grid grid-cols-1 gap-6 lg:grid-cols-2">
-            {[
-              { img: "/images/06_top_gift_cards_upscaled.png", title: "Top Gift Cards", desc: "Access premium gift card options" },
-              { img: "/images/07_fast_secure_withdrawals_upscaled.png", title: "Fast & Secure", desc: "Instant withdrawals to your wallet" },
-              { img: "/images/08_invite_friends_upscaled.png", title: "Invite Friends", desc: "Earn commissions from referrals" },
-              { img: "/images/01_top_hero_4K.png", title: "Premium Experience", desc: "Professional platform for serious earners" },
-            ].map((item, i) => (
-              <Reveal key={item.title} delay={(i % 2) * 0.1}>
-                <Tilt strength={5} className="h-full">
-                  <div className="group relative h-full overflow-hidden rounded-2xl glass-card transition-all duration-300 hover:shadow-brand">
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                      <h3 className="font-bold text-white text-xl">{item.title}</h3>
-                      <p className="text-sm text-white/80 mt-1">{item.desc}</p>
-                    </div>
-                  </div>
-                </Tilt>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
