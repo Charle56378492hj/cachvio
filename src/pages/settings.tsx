@@ -162,7 +162,7 @@ export default function Settings() {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" disabled={changePasswordMutation.isPending} variant="secondary" className="font-bold text-white border border-border">
+                  <Button type="submit" disabled={changePasswordMutation.isPending} className="brand-gradient font-bold text-white border-0 shadow-brand hover:-translate-y-0.5 transition-transform">
                     {changePasswordMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     Update Password
                   </Button>
