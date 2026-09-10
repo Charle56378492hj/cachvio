@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -88,7 +89,7 @@ export default function Settings() {
             </CardHeader>
             <CardContent>
               <div className="mb-6">
-                <FormLabel className="text-muted-foreground uppercase text-xs font-bold mb-2 block">Email (Read Only)</FormLabel>
+                <Label className="text-muted-foreground uppercase text-xs font-bold mb-2 block">Email (Read Only)</Label>
                 <Input value={user?.email || ""} disabled className="bg-accent/50 border-input opacity-70" />
               </div>
               <Form {...profileForm}>
