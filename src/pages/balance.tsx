@@ -64,9 +64,9 @@ export default function Balance() {
                   )}
                   {!isLoading && Number(balanceData?.balance ?? 0) === 0 && (
                     <img
-                      src="/assets/fox-earn-zero-balance.png"
+                      src="/assets/fox-earn-zero-balance.webp"
                       alt="Your balance is currently zero"
-                      className="w-28 max-h-28 shrink-0 object-contain object-right sm:w-40 sm:max-h-36"
+                      className="w-36 max-h-36 shrink-0 object-contain object-right sm:w-52 sm:max-h-44"
                     />
                   )}
                 </div>
