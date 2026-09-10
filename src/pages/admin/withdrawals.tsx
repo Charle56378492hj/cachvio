@@ -12,6 +12,11 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 
+const formatAdminAmount = (value: string | number | null | undefined) => {
+  const amount = Number(value ?? 0);
+  return Number.isFinite(amount) ? amount.toFixed(1) : "0.0";
+};
+
 export default function AdminWithdrawals() {
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState<string>("all");
@@ -23,7 +28,7 @@ export default function AdminWithdrawals() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row justify-between gap-4 sm:items-center">
           <div>
-            <h2 className="text-3xl font-black tracking-tight uppercase text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Withdrawals</h2>
+            <h2 className="text-3xl font-black tracking-tight uppercase text-foreground">Withdrawals</h2>
           </div>
           <Select value={status} onValueChange={setStatus}>
             <SelectTrigger className="w-[180px] bg-background border-border">
@@ -58,7 +63,7 @@ export default function AdminWithdrawals() {
                   ) : data?.withdrawals?.map(w => (
                     <TableRow key={w.id} className="border-border">
                       <TableCell className="font-mono text-xs">{w.userId}</TableCell>
-                      <TableCell className="font-bold text-black">{w.amount} USDT</TableCell>
+                      <TableCell className="font-mono font-bold text-foreground">{formatAdminAmount(w.amount)} USDT</TableCell>
                       <TableCell>
                         <div className="text-xs text-muted-foreground">{w.network}</div>
                         <div className="font-mono text-xs truncate max-w-[150px]" title={w.walletAddress}>{w.walletAddress}</div>
@@ -116,7 +121,7 @@ function WithdrawalActions({ withdrawal }: { withdrawal: any }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary hover:text-black">Update</Button>
+        <Button variant="outline" size="sm" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary hover:text-white">Update</Button>
       </DialogTrigger>
       <DialogContent className="bg-card border-border">
         <DialogHeader>

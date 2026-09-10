@@ -11,6 +11,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 
+const formatAdminAmount = (value: string | number | null | undefined) => {
+  const amount = Number(value ?? 0);
+  return Number.isFinite(amount) ? amount.toFixed(1) : "0.0";
+};
+
 export default function AdminUsers() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -22,7 +27,7 @@ export default function AdminUsers() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row justify-between gap-4 sm:items-center">
           <div>
-            <h2 className="text-3xl font-black tracking-tight uppercase text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">User Management</h2>
+            <h2 className="text-3xl font-black tracking-tight uppercase text-foreground">User Management</h2>
           </div>
           <Input 
             placeholder="Search username or email..." 
@@ -50,9 +55,9 @@ export default function AdminUsers() {
                     <TableRow><TableCell colSpan={5} className="text-center py-8"><Loader2 className="animate-spin h-6 w-6 mx-auto text-primary" /></TableCell></TableRow>
                   ) : data?.users?.map(user => (
                     <TableRow key={user.id} className="border-border">
-                      <TableCell className="font-medium text-white">{user.username}</TableCell>
+                      <TableCell className="font-semibold text-foreground">{user.username}</TableCell>
                       <TableCell className="text-muted-foreground">{user.email}</TableCell>
-                      <TableCell className="font-mono text-primary font-bold">{user.balance}</TableCell>
+                      <TableCell className="font-mono text-primary font-bold">{formatAdminAmount(user.balance)} USDT</TableCell>
                       <TableCell>
                         <Badge variant={user.status === 'active' ? 'default' : 'secondary'}>{user.status}</Badge>
                       </TableCell>
@@ -116,7 +121,7 @@ function UserActions({ user }: { user: any }) {
     <div className="flex justify-end gap-2">
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary hover:text-black">Balance</Button>
+          <Button variant="outline" size="sm" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary hover:text-white">Balance</Button>
         </DialogTrigger>
         <DialogContent className="bg-card border-border">
           <DialogHeader>

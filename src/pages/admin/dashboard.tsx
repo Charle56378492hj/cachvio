@@ -38,11 +38,16 @@ const platformData = [
   { name: "BitLabs", value: 8, color: "#ffedd5" },
 ];
 
+const formatAdminAmount = (value: string | number | null | undefined) => {
+  const amount = Number(value ?? 0);
+  return Number.isFinite(amount) ? amount.toFixed(1) : "0.0";
+};
+
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-card border border-border rounded-xl p-3 shadow-lg text-xs">
-        <p className="font-bold text-white mb-1">{label}</p>
+        <p className="font-bold text-foreground mb-1">{label}</p>
         {payload.map((p: any, i: number) => (
           <p key={i} style={{ color: p.color }} className="font-medium">
             {p.name}: ${p.value?.toLocaleString()}
@@ -59,8 +64,8 @@ export default function AdminDashboard() {
 
   const statCards = [
     { label: "Total Users", value: stats?.totalUsers, sub: `${stats?.activeUsers ?? 0} active`, icon: Users, color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/20" },
-    { label: "System Balance", value: `${stats?.totalBalanceInSystem ?? 0} USDT`, sub: "across all wallets", icon: Coins, color: "text-yellow-400", bg: "bg-yellow-500/10", border: "border-yellow-500/20" },
-    { label: "Total Withdrawn", value: `${stats?.totalWithdrawnAllTime ?? 0} USDT`, sub: "all time", icon: TrendingUp, color: "text-primary", bg: "bg-primary/10", border: "border-primary/20" },
+    { label: "System Balance", value: `${formatAdminAmount(stats?.totalBalanceInSystem)} USDT`, sub: "across all wallets", icon: Coins, color: "text-yellow-400", bg: "bg-yellow-500/10", border: "border-yellow-500/20" },
+    { label: "Total Withdrawn", value: `${formatAdminAmount(stats?.totalWithdrawnAllTime)} USDT`, sub: "all time", icon: TrendingUp, color: "text-primary", bg: "bg-primary/10", border: "border-primary/20" },
     { label: "Pending Withdrawals", value: stats?.pendingWithdrawals, sub: "awaiting review", icon: Clock, color: "text-orange-500", bg: "bg-orange-500/10", border: "border-orange-500/20" },
     { label: "Active Platforms", value: stats?.totalPlatforms, sub: "offerwalls", icon: Gamepad2, color: "text-purple-400", bg: "bg-purple-500/10", border: "border-purple-500/20" },
     { label: "Admins", value: "—", sub: "manage access", icon: UserCheck, color: "text-teal-400", bg: "bg-teal-500/10", border: "border-teal-500/20" },
@@ -71,7 +76,7 @@ export default function AdminDashboard() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="text-2xl font-black tracking-tight text-white flex items-center gap-2">
+            <h2 className="text-2xl font-black tracking-tight text-foreground flex items-center gap-2">
               <Activity className="h-6 w-6 text-primary" />
               Admin Overview
             </h2>
@@ -99,7 +104,7 @@ export default function AdminDashboard() {
                 {isLoading ? (
                   <Skeleton className="h-8 w-24 mt-1" />
                 ) : (
-                  <div className="text-2xl font-black text-black">{stat.value ?? "—"}</div>
+              <div className="text-2xl font-black text-foreground">{stat.value ?? "—"}</div>
                 )}
                 <p className="text-[10px] text-muted-foreground mt-1">{stat.sub}</p>
               </CardContent>
@@ -170,7 +175,7 @@ export default function AdminDashboard() {
                       <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: p.color }} />
                       <span className="text-muted-foreground">{p.name}</span>
                     </div>
-                    <span className="font-bold text-white">{p.value}%</span>
+                    <span className="font-bold text-foreground">{p.value}%</span>
                   </div>
                 ))}
               </div>
@@ -238,7 +243,7 @@ export default function AdminDashboard() {
               <CardContent className="p-4 pt-0">
                 <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-3 space-y-2">
                   <p className="text-xs font-bold text-orange-500 uppercase tracking-wider">Action Required</p>
-                  <p className="text-white font-bold text-lg">{stats.pendingWithdrawals} pending</p>
+                  <p className="text-foreground font-bold text-lg">{stats.pendingWithdrawals} pending</p>
                   <Link href="/admin/withdrawals">
                     <Button className="bg-orange-500 text-white hover:bg-orange-600 font-bold w-full text-xs h-8 mt-1">
                       Review Now

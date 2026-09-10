@@ -67,7 +67,7 @@ export default function AdminVerifications() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row justify-between gap-4 sm:items-center">
           <div>
-            <h2 className="text-3xl font-black tracking-tight uppercase text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Pending Verifications</h2>
+            <h2 className="text-3xl font-black tracking-tight uppercase text-foreground">Pending Verifications</h2>
             <p className="text-muted-foreground">Active verification codes for users who couldn't receive email.</p>
           </div>
           <Button variant="outline" size="sm" onClick={() => refetch()} disabled={isFetching} className="gap-2">
@@ -117,7 +117,7 @@ export default function AdminVerifications() {
                   ) : data?.verifications?.map((v) => (
                     <TableRow key={v.id} className="border-border">
                       <TableCell className="text-muted-foreground">{v.email}</TableCell>
-                      <TableCell className="font-medium text-white">{v.username}</TableCell>
+                      <TableCell className="font-semibold text-foreground">{v.username}</TableCell>
                       <TableCell>
                         <span className="font-mono text-primary font-black text-lg tracking-widest">{v.code}</span>
                       </TableCell>
@@ -131,7 +131,7 @@ export default function AdminVerifications() {
                           variant="outline"
                           size="sm"
                           onClick={() => handleCopy(v)}
-                          className="gap-2 bg-primary/10 text-primary border-primary/20 hover:bg-primary hover:text-black"
+                          className="gap-2 bg-primary/10 text-primary border-primary/20 hover:bg-primary hover:text-white"
                         >
                           {copiedId === v.id ? <CheckCircle2 className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                           {copiedId === v.id ? "Copied!" : "Copy Code"}

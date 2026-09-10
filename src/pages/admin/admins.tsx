@@ -12,7 +12,7 @@ export default function AdminAdmins() {
     <Layout>
       <div className="space-y-6">
         <div>
-          <h2 className="text-3xl font-black tracking-tight uppercase text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">Admins</h2>
+          <h2 className="text-3xl font-black tracking-tight uppercase text-foreground">Admins</h2>
           <p className="text-muted-foreground">Manage administrative access.</p>
         </div>
 
@@ -34,7 +34,7 @@ export default function AdminAdmins() {
                   ) : data?.admins?.map(admin => (
                     <TableRow key={admin.id} className="border-border">
                       <TableCell className="font-mono text-xs">{admin.userId}</TableCell>
-                      <TableCell className="font-bold text-white">{admin.username}</TableCell>
+                      <TableCell className="font-semibold text-foreground">{admin.username}</TableCell>
                       <TableCell className="text-muted-foreground">{admin.email}</TableCell>
                       <TableCell>
                         <Badge variant={admin.role === 'super_admin' ? 'default' : 'secondary'} className="uppercase tracking-wider text-[10px]">
