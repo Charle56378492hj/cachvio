@@ -51,7 +51,7 @@ export default function Balance() {
                   </span>
                 </div>
 
-                <div className="relative mt-5 depth-2">
+                <div className="relative mt-5 depth-2 flex items-center justify-between gap-4">
                   {isLoading ? (
                     <Skeleton className="h-16 w-56 bg-white/10" />
                   ) : (
@@ -61,6 +61,13 @@ export default function Balance() {
                       </span>
                       <span className="text-2xl font-black text-primary-glow">USDT</span>
                     </div>
+                  )}
+                  {!isLoading && Number(balanceData?.balance ?? 0) === 0 && (
+                    <img
+                      src="/assets/fox-earn-zero-balance.png"
+                      alt="Your balance is currently zero"
+                      className="w-28 max-h-28 shrink-0 object-contain object-right sm:w-40 sm:max-h-36"
+                    />
                   )}
                 </div>
 
