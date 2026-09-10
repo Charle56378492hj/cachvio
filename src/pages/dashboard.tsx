@@ -79,7 +79,7 @@ export default function Dashboard() {
         </Reveal>
 
         {/* Stats — 3D tilt cards */}
-        <div className="grid gap-2.5 grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-2 grid-cols-2 lg:grid-cols-4">
           {statCards.map((stat, i) => (
             <Reveal key={stat.label} delay={i * 0.06}>
               <Tilt strength={6} className="h-full">
@@ -91,25 +91,25 @@ export default function Dashboard() {
                   {stat.highlight && (
                     <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full brand-gradient opacity-20 blur-2xl" aria-hidden />
                   )}
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1.5 p-3">
-                    <CardTitle className="text-[9px] sm:text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{stat.label}</CardTitle>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-2">
+                    <CardTitle className="text-[8px] sm:text-[9px] font-bold text-muted-foreground uppercase tracking-wider">{stat.label}</CardTitle>
                     <div
-                      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md ${
+                      className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md ${
                         stat.highlight ? "brand-gradient shadow-brand" : "bg-primary/10 border border-primary/20"
                       }`}
                     >
-                      <stat.icon className={`h-3 w-3 ${stat.highlight ? "text-white" : "text-primary"}`} />
+                      <stat.icon className={`h-2.5 w-2.5 ${stat.highlight ? "text-white" : "text-primary"}`} />
                     </div>
                   </CardHeader>
-                  <CardContent className="relative p-3 pt-0">
+                  <CardContent className="relative p-2 pt-0">
                     {statsLoading ? (
-                      <Skeleton className="h-7 w-20 mt-1" />
+                      <Skeleton className="h-6 w-16 mt-0.5" />
                     ) : (
-                      <div className={`text-xl sm:text-[1.35rem] font-black tracking-tight ${stat.highlight ? "brand-text" : "text-foreground"}`}>
+                      <div className={`text-lg sm:text-xl font-black tracking-tight ${stat.highlight ? "brand-text" : "text-foreground"}`}>
                         {stat.value}
                       </div>
                     )}
-                    <p className="text-[9px] text-muted-foreground mt-0.5 uppercase tracking-wider">USDT</p>
+                    <p className="text-[8px] text-muted-foreground mt-0 uppercase tracking-wider">USDT</p>
                   </CardContent>
                 </Card>
               </Tilt>
